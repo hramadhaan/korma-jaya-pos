@@ -2,6 +2,7 @@
   <header
     class="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
   >
+    <!-- Mobile condition -->
     <Sheet>
       <SheetTrigger as-child>
         <Button size="icon" variant="outline" class="sm:hidden">
@@ -73,6 +74,30 @@
       </BreadcrumbList>
     </Breadcrumb>
     <div class="relative ml-auto flex-1 md:grow-0">
+      <DropdownMenu>
+        <DropdownMenuTrigger as-child>
+          <Button variant="secondary" size="icon" class="hidden md:flex">
+            <MoonIcon
+              class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+            />
+            <SunIcon
+              class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+            />
+            <span class="sr-only">Toggle theme</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem @click="colorMode.preference = 'light'">
+            Light
+          </DropdownMenuItem>
+          <DropdownMenuItem @click="colorMode.preference = 'dark'">
+            Dark
+          </DropdownMenuItem>
+          <DropdownMenuItem @click="colorMode.preference = 'system'">
+            System
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <!-- <Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
       <Input
         type="search"
@@ -93,7 +118,7 @@
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem @click="logout">Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   </header>
@@ -106,11 +131,17 @@ import {
   PanelLeft,
   ShoppingCart,
   CircleUser,
-  Search,
   LineChart,
   Users2,
   Package,
+  SunIcon,
+  MoonIcon,
 } from "lucide-vue-next";
-</script>
 
-<style></style>
+const router = useRouter();
+const colorMode = useColorMode();
+
+const logout = async () => {
+  router.push("/authentication/logout");
+};
+</script>
